@@ -20,8 +20,7 @@ model Employee {
 model DailyRegister {
   id         Int      @id @default(autoincrement())
   employeeId Int
-  date       DateTime
-  timeIn     DateTime
-  timeOut    DateTime
+  date       DateTime @default(now())
+  type       String
   employee   Employee @relation(fields: [employeeId], references: [id])
 }
