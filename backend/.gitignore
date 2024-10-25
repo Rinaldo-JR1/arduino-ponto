@@ -1,6 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
-
+*.db
 ### Node ###
 # Logs
 logs
@@ -13,6 +13,7 @@ lerna-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
 
 # Runtime data
 pids
