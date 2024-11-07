@@ -4,12 +4,23 @@ import { RegisterTypes } from "../shared/enums/registerTypes";
 
 export class RegisterService {
   private prisma = new PrismaClient();
-  public async register(tagId: string) {
-    const foundUser = await this.prisma.employee.findFirst({
+  public async getRegisterByTagId(tagId: string) {
+    return await this.prisma.employee.findFirst({
       where: {
         tagId: tagId,
       },
     });
+  }
+  public async getRegisters() {
+    return await this.prisma.dailyRegister.findMany({
+      include: {
+        employee: true,
+      },
+    });
+  }
+
+  public async register(tagId: string) {
+    const foundUser = await this.getRegisterByTagId(tagId);
     //Verify if exists
     if (!foundUser) {
       return RegisterErrorTypes.NOTFOUND;

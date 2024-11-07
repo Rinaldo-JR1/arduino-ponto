@@ -1,9 +1,9 @@
 import { Response } from "express";
 
 export class HttpUtils {
-  public static ok(res: any, message: any, data?: any) {
+  public static ok(res: any, message?: string, data?: any) {
     res.status(200).json({
-      message,
+      message: message,
       data,
     });
   }

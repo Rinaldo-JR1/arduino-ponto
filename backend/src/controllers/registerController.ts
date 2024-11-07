@@ -21,4 +21,13 @@ export class RegisterController {
     HttpUtils.ok(res, registerStatus);
     return;
   }
+  public async getRegisters(req: Request, res: Response, _next: NextFunction) {
+    const registerService = new RegisterService();
+    const registers = await registerService.getRegisters();
+    if (!registers) {
+      HttpUtils.notFound(res, "Registers not found");
+      return;
+    }
+    HttpUtils.ok(res, "Registers found", registers);
+  }
 }
