@@ -8,13 +8,15 @@
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance.
 
-const char* ssid = "*******";      // Substitua pelo seu SSID
-const char* password = "*******";  // Substitua pela sua senha
+const char* ssid = "********";      // Substitua pelo seu SSID
+const char* password = "******";  // Substitua pela sua senha
 
-const String apiUrlBase = "http://localhost:3002/register/";  // Base URL
+const String apiUrl = "http://192.168.0.250:9000/ponto-api/register";  // URL da API
 
-unsigned long ledTimer = 0;  // Timer para controlar a duração do LED
-int activeLedPin = -1;       // LED atualmente ativo
+unsigned long ledTimer = 0;          // Timer para controlar a duração do LED
+unsigned long readCooldownTimer = 0; // Timer para controlar o intervalo entre leituras
+int activeLedPin = -1;               // LED atualmente ativo
+const unsigned long cooldownPeriod = 5000;  // Período de resfriamento (5 segundos)
 
 void setup() {
     Serial.begin(9600);  // Inicia a serial
@@ -30,6 +32,11 @@ void setup() {
 }
 
 void loop() {
+    if (millis() - readCooldownTimer < cooldownPeriod) {
+        handleLedTiming();
+        return;  // Aguarda o período de resfriamento antes de ler novamente
+    }
+
     if (!mfrc522.PICC_IsNewCardPresent() || !mfrc522.PICC_ReadCardSerial()) {
         handleLedTiming();
         return;
@@ -65,6 +72,7 @@ String readCardUID() {
 void handleCard(const String& uid) {
     Serial.println("UID da tag: " + uid);
     sendHttpRequest(uid);
+    readCooldownTimer = millis();  // Reinicia o timer de resfriamento após leitura bem-sucedida
 }
 
 void sendHttpRequest(const String& uid) {
@@ -75,10 +83,13 @@ void sendHttpRequest(const String& uid) {
     }
 
     HTTPClient client;
-    String fullUrl = apiUrlBase + uid;
-    client.begin(fullUrl);
+    client.begin(apiUrl);
 
-    int httpCode = client.GET();
+    // Configura o cabeçalho e o corpo da requisição POST
+    client.addHeader("Content-Type", "application/json");
+    String requestBody = "{\"uid\": \"" + uid + "\"}";
+
+    int httpCode = client.POST(requestBody);
 
     if (httpCode > 0) {
         Serial.println("\nStatusCode: " + String(httpCode));

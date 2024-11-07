@@ -23,19 +23,19 @@ export class RegisterService {
         date: "desc",
       },
     });
-    if (!lastRegister || lastRegister.registerType === RegisterTypes.EXIT) {
+    if (!lastRegister || lastRegister.type === RegisterTypes.EXIT) {
       await this.prisma.dailyRegister.create({
         data: {
           employeeId: foundUser.id,
-          registerType: RegisterTypes.ENTRY,
+          type: RegisterTypes.ENTRY,
         },
       });
     }
-    if (lastRegister?.registerType === RegisterTypes.ENTRY) {
+    if (lastRegister?.type === RegisterTypes.ENTRY) {
       await this.prisma.dailyRegister.create({
         data: {
           employeeId: foundUser.id,
-          registerType: RegisterTypes.EXIT,
+          type: RegisterTypes.EXIT,
         },
       });
     }
