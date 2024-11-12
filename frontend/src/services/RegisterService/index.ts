@@ -1,5 +1,5 @@
 import { api } from "@/src/config/api";
-import { GetRegisters } from "@/src/types/response/GetRegisters";
+import { GetRegisters } from "@/src/shared/types/response/GetRegisters";
 
 export class RegisterService {
   async getRegisters() {
