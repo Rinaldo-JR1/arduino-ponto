@@ -1,13 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import { RegisterErrorTypes } from "../shared/enums/registerErrorTypes";
 import { RegisterTypes } from "../shared/enums/registerTypes";
+import { EmployeeStatus } from "../shared/enums/employeeStatus";
 
 export class RegisterService {
   private prisma = new PrismaClient();
+
   public async getRegisterByTagId(tagId: string) {
     return await this.prisma.employee.findFirst({
       where: {
         tagId: tagId,
+        status: EmployeeStatus.ACTIVE,
       },
     });
   }

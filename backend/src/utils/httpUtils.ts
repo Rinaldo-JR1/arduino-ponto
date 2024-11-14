@@ -13,4 +13,10 @@ export class HttpUtils {
   public static created(res: any, message: string, data?: any) {
     res.status(201).json(message, data);
   }
+  public static badRequest(res: any, message: string, data?: any) {
+    res.status(400).json({ message, data });
+  }
+  public static unauthorized(res: any, message: string, data?: any) {
+    res.status(401).json({ message, data });
+  }
 }

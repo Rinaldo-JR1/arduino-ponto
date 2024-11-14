@@ -4,16 +4,18 @@ import { RegisterService } from "../service/registerService";
 import { RegisterErrorTypes } from "../shared/enums/registerErrorTypes";
 
 export class RegisterController {
+  private registerService = new RegisterService();
+  constructor() {
+    this.register = this.register.bind(this);
+    this.getRegisters = this.getRegisters.bind(this);
+  }
   public async register(req: Request, res: Response, _next: NextFunction) {
-    const registerService = new RegisterService();
-
-    // const { tagId } = req.params;
     const { uid } = req.body;
     console.log(uid);
     if (!uid) {
       HttpUtils.notFound(res, "TagId not found");
     }
-    const registerStatus = await registerService.register(uid);
+    const registerStatus = await this.registerService.register(uid);
     if (registerStatus === RegisterErrorTypes.NOTFOUND) {
       HttpUtils.notFound(res, "TagId not found");
       return;
@@ -22,8 +24,7 @@ export class RegisterController {
     return;
   }
   public async getRegisters(req: Request, res: Response, _next: NextFunction) {
-    const registerService = new RegisterService();
-    const registers = await registerService.getRegisters();
+    const registers = await this.registerService.getRegisters();
     if (!registers) {
       HttpUtils.notFound(res, "Registers not found");
       return;
