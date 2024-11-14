@@ -13,10 +13,19 @@ class App {
   constructor(port: number) {
     this.app = express();
     this.port = port;
-    // const corsOptions: CorsOptions = {
-    //   origin: ["http://localhost:3000", "http://localhost:3001", "*"],
-    // };
-    this.app.use(cors());
+    const corsOptions = {
+      origin: ["http://localhost:3000", "http://localhost:3001", "*"],
+      credentials: true,
+      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "X-Requested-With",
+        "Accept",
+      ],
+    };
+
+    this.app.use(cors(corsOptions));
     this.app.use(express.json());
     this.app.use(cookieParser());
     this.app.use((req: Request, res: Response, next: NextFunction) => {

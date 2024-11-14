@@ -12,16 +12,16 @@ export class EmployeeService {
       },
     });
     if (checkTagId) {
-      return "Tag já existe";
+      return { message: "Tag já existe" };
     }
 
-    await this.prisma.employee.create({
+    const created = await this.prisma.employee.create({
       data: {
         name: name,
         tagId: tagId,
       },
     });
-    return "Funcionario criado";
+    return { message: "Funcionario criado", created };
   }
 
   public async getRegisters() {

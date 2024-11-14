@@ -9,8 +9,8 @@ import { dateService } from "@/src/services/DateService";
 
 export const RegistersTable = () => {
   const [registers, setRegisters] = useState<GetRegisters["data"]>([]);
-
   useEffect(() => {
+    
     (async () => {
       const data = await fetchRegisters();
       setRegisters(data);

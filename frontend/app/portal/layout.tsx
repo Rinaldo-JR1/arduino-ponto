@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Navbar } from "@/src/components/Navbar";
 
 export const metadata: Metadata = {
@@ -16,9 +14,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`antialiased`}>
-        <AntdRegistry>
           <Navbar>{children}</Navbar>
-        </AntdRegistry>
       </body>
     </html>
   );

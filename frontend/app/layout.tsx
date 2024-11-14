@@ -30,9 +30,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AntdRegistry>
-          <AppContextProvider>{children}</AppContextProvider>
-        </AntdRegistry>
+        <AppContextProvider>
+          <AntdRegistry>{children}</AntdRegistry>
+        </AppContextProvider>
       </body>
     </html>
   );

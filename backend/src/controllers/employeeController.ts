@@ -27,7 +27,7 @@ export class EmployeeController {
     }
 
     const resText = await this.employeeService.register(name, tagId);
-    HttpUtils.ok(res, resText);
+    HttpUtils.ok(res, resText.message, resText.created);
   }
 
   public async getEmployee(req: Request, res: Response, _next: NextFunction) {
