@@ -1,11 +1,12 @@
 import { RegisterType } from "@/src/shared/enums/RegisterTypeEnum";
+import { Tag } from "antd";
 
 export const handleRegisterType = (type: string) => {
   if (type === RegisterType.ENTRANCE) {
-    return "Entrada";
+    return <Tag color="green">Entrada</Tag>;
   }
   if (type === RegisterType.EXIT) {
-    return "Saída";
+    return <Tag color="red">Saída</Tag>;
   }
-  return "Desconhecido";
+  return <Tag>Desconhecido</Tag>;
 };

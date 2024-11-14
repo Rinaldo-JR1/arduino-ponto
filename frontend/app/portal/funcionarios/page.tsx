@@ -2,7 +2,7 @@ import { TableEmployee } from "./_components/TableEmployee";
 
 const Funcionarios = () => {
   return (
-    <div>
+    <div className="p-4">
       <TableEmployee />
     </div>
   );
